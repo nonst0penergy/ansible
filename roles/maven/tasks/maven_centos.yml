@@ -1,0 +1,36 @@
+---
+- name: Gathering facts
+  setup: fact_path=/etc/ansible/facts.d
+  become_user: '{{ name }}'
+  become_method: 'sudo'
+  become: true
+
+- name: Download arch apache-maven-3.3.3
+  shell: wget {{maven333}} -P /tmp
+
+- unarchive: src=/tmp/{{tar_maven}} dest=/opt/ copy=no
+
+- name: Rename maven directory
+  shell: mv /opt/apache-maven-3.3.3/ /opt/maven/
+
+- name: Add maven and java home environment
+  lineinfile:
+      dest: '{{ansible_env.HOME}}/.bash_profile'
+      line: |
+        export JAVA_HOME={{java_home_centos}}
+        export MAVEN_HOME={{maven_home_centos}}
+        export PATH=${JAVA_HOME}/bin:${MAVEN_HOME}/bin:${PATH}
+      state: 'present'
+      create: 'true'
+      insertafter: 'EOF'
+  become_user: '{{ name }}'
+  become_method: 'sudo'
+  become: true
+
+- name: Set source ~/.bash_profile
+  shell: 'source {{ansible_env.HOME}}/.bash_profile'
+  become_user: '{{ name }}'
+  become_method: 'sudo'
+  become: true
+
+

@@ -1,0 +1,11 @@
+---
+  - include: java_centos.yml
+    sudo: yes
+    when: ansible_os_family == "RedHat"
+    
+  - include: java_ubuntu.yml
+    sudo: yes
+    when: ansible_os_family == "Debian"
+
+
+

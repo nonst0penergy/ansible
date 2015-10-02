@@ -1,0 +1,8 @@
+---
+- hosts: linux
+  roles: 
+     - foundations
+     - java
+     - jenkins
+     - elasticsearch
+     - maven

@@ -1,0 +1,6 @@
+---
+- include: elasticsearch_centos.yml
+ when: ansible_os_family == "RedHat"
+
+- include: elasticsearch_ubuntu.yml
+  when: ansible_os_family == "Debian"

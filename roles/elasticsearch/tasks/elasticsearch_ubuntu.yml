@@ -1,0 +1,21 @@
+---
+- name: ADD Elastic key ubuntu
+  shell: wget -q -O - {{elastic_key}} | apt-key add - 
+  sudo: yes
+  
+- name: Save repository elastic ubuntu
+  shell: sh -c 'echo "deb http://packages.elastic.co/elasticsearch/1.7/debian stable main" | sudo tee -a /etc/apt/sources.list.d/elasticsearch-1.7.list'
+  sudo: yes
+  
+- name: install elasticsearch ubuntu
+  apt:
+     update_cache: yes
+     name: elasticsearch
+     state: present
+  sudo: yes
+  
+- name: Start elasticsearch service ubuntu
+  service: 
+     name: 'elasticsearch'
+     state: 'started'
+  sudo: yes

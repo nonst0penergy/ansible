@@ -1,0 +1,4 @@
+ssh_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+generate_ssh_key: 'yes'
+shell: '/bin/bash'
+sudo_access: 'yes'

@@ -1,0 +1,21 @@
+---
+- name: Jenkins repo centos
+  shell: wget -O /etc/yum.repos.d/jenkins.repo {{centos_repo}} | rpm --import {{jenkins_key}}
+  sudo: yes
+  
+- name: Install jenkins centos
+  yum:
+     name: 'jenkins'
+     state: 'installed'
+  sudo: yes
+  
+- name: Add chkconfig jenkins centos
+  shell: chkconfig jenkins on
+  sudo: yes
+  
+- name: Start jenkins centos
+  service: 
+     name: 'jenkins'
+     state: 'started'
+  sudo: yes
+  

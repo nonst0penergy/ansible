@@ -1,0 +1,15 @@
+---
+- name: Jenkins repo ubuntu
+  shell: wget -q -O - {{ubuntu_key}} | apt-key add - 
+  sudo: yes
+  
+- name: Add jenkins in source list  ubuntu
+  shell: sh -c 'echo deb http://pkg.jenkins-ci.org/debian binary/ > /etc/apt/sources.list.d/jenkins.list'
+  sudo: yes
+  
+- name: Install jenkins ubuntu
+  apt:
+     update_cache: yes
+     name: jenkins
+     state: present
+  sudo: yes

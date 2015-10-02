@@ -1,0 +1,23 @@
+---
+- name: Elasticsearch repo centos
+  shell: rpm --import {{elastic_key}}
+  sudo: yes
+ 
+- copy: src=elasticsearch.repo dest=/etc/yum.repos.d/elasticsearch.repo owner=root group=root mode=0644
+ 
+- name: install elasticsearch centos
+  yum:
+     name: 'elasticsearch'
+     state: 'installed'
+  sudo: yes
+ 
+- name: Add chkconfig elasticsearch centos
+  shell: chkconfig elasticsearch on
+  sudo: yes
+ 
+- name: Start elasticsearch centos
+  service: 
+     name: 'elasticsearch'
+     state: 'started'
+  sudo: yes
+ 

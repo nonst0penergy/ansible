@@ -1,0 +1,33 @@
+---
+- name: Soft install centos
+  apt: 
+    name: '{{item}}'
+    state: installed
+  with_items:
+     - git
+     - wget
+     - vim
+     - software-properties-common 
+     - python-software-properties
+  sudo: yes
+  when: ansible_os_family == "Debian"
+
+- name: Soft install ubuntu
+  yum: 
+    name: '{{item}}'
+    state: installed
+  with_items:
+     - git
+     - wget
+     - vim
+  sudo: yes
+  when: ansible_os_family == "RedHat"
+
+- name: Create user and generate ssh-key for him
+  user: name={{name}} generate_ssh_key={{generate_ssh_key}} ssh_key_type=rsa shell={{shell}}
+  sudo: yes
+- name: dsds
+  lineinfile: dest=/etc/sudoers state=present regexp='^%ADMIN ALL\=' line='maven ALL=(ALL:ALL) ALL' validate='visudo -cf %s'
+  sudo: yes
+#- name: Add my public key to the server
+#  authorized_key: user={{name}} key="{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
